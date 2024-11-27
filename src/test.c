@@ -4,18 +4,23 @@ int ft_count(char *str)
 {
 	size_t count;
 
-	count = 0;
-	while(str)
+	count = 1;
+	while(*str)
 	{
-		if(*str == '\n' || *str ==' ')
+		if(*str == '\n')
 			count++;
+		if(*str == ' ')
+		{
+			count++;
+			str++;
+		}
+
 		str++;
 	}
 	return(count);
-}	
+}
 
-
-void ft_read_map(t_map *s_var)
+void ft_read_map(t_map *s_map)
 {
 	int fd;
 	//int old_size;
@@ -28,12 +33,18 @@ void ft_read_map(t_map *s_var)
 	fd = open("map/test.fdf", O_RDONLY);
 	while(new_size == nread)
 	{
-		nread = read(fd, s_var->map, 1024);
+		nread = read(fd, s_map->map, 1024);
 
-	s_var->map[nread - 1] = 0;
-		//s_var->map = ft_realloc(s_var->map, old_size, old_size + nread, 1);
+	s_map->map[nread - 1] = 0;
+		//s_map->map = ft_realloc(s_map->map, old_size, old_size + nread, 1);
 	}
+	s_map->size_map = ft_count(s_map->map);
 
-	printf("%s\n", s_var->map);
-	printf("compte = %d", ft_count(s_var->map));	
+	printf("%s\n", s_map->map);
 }
+
+// void project_isometric(int x, int y, int z, int *x_proj, int *y_proj) {
+// float angle = M_PI / 6; // 30 degres
+// *x_proj = (x - y) * cos(angle);
+// *y_proj = (x + y) * sin(angle) - z;
+// }

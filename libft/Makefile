@@ -1,6 +1,6 @@
 # Variables
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror
+CFLAGS  = -Wall -Wextra -Werror -I.
 NAME    = libft.a
 
 SRC_DIR = .
