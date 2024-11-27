@@ -2,6 +2,7 @@
 
 int main(void)
 {
-	t_var s_var;
+	t_map s_var;
+	
 	ft_read_map(&s_var);
 }
