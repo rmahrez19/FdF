@@ -20,6 +20,19 @@ int ft_count(char *str)
 	return(count);
 }
 
+void ft_alloc(int size, int **res)
+{
+	size_t i;
+
+	i = 0;
+	res = malloc(sizeof(int *) * size);
+	while(i < size)
+	{
+		res[i] = malloc(sizeof(int) * 3);
+		i++;
+	}
+}
+
 void ft_read_map(t_map *s_map)
 {
 	int fd;
@@ -39,7 +52,6 @@ void ft_read_map(t_map *s_map)
 		//s_map->map = ft_realloc(s_map->map, old_size, old_size + nread, 1);
 	}
 	s_map->size_map = ft_count(s_map->map);
-
 	printf("%s\n", s_map->map);
 }
 
