@@ -5,7 +5,7 @@
 typedef struct s_map
 {
 	char	map[1024];
-	int		size_map;
+	size_t		size_map;
 	int		**position;
 	char 	**res;
 }t_map;
@@ -14,7 +14,7 @@ typedef struct s_map
 #define M_PI
 #endif
 
-void	ft_alloc(int size, int **res);
+void	ft_alloc(size_t size, int **res);
 void	ft_read_map(t_map *s_map);
 
 #endif

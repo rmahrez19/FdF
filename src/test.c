@@ -20,7 +20,7 @@ int ft_count(char *str)
 	return(count);
 }
 
-void ft_alloc(int size, int **res)
+void ft_alloc(size_t size, int **res)
 {
 	size_t i;
 
