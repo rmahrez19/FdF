@@ -9,18 +9,29 @@ void    draw_pixel(void *mlx_ptr, void *win_ptr, int x, int y, int color)
 
 void project_isometric(int x, int y, int z, void *mlx_ptr, void *win_ptr, int color) 
 {
+
 	int x_proj;
-	int y_proj;
+    int y_proj;
+    float angle;
+    int zoom = 20;
+    int offset_x = 400;  // Centrage horizontal pour une fenêtre de 800px de large
+    int offset_y = 300;  // Centrage vertical pour une fenêtre de 600px de hauteur
 
-	float angle;
-	
-	angle = M_PI / 6; // 30 degres
-	x_proj = (x - y) * cos(angle);
-	y_proj = (x + y) * sin(angle) - z;
+    angle = M_PI / 6; // 30 degrés
+    // Calcul des coordonnées projetées (sans zoom)
+    x_proj = (x - y) * cos(angle);
+    y_proj = (x + y) * sin(angle) - z;
 
-	x_proj = (x_proj / WINDOW_WIDTH);
-	y_proj = (y_proj / WINDOW_WIDTH);
-	draw_pixel(mlx_ptr, win_ptr, x_proj , y_proj , color);
+    // Appliquer le zoom en multipliant les coordonnées projetées par le facteur de zoom
+    x_proj = x_proj * zoom;
+    y_proj = y_proj * zoom;
+
+    // Centrer les coordonnées projetées sur l'écran
+    x_proj += offset_x;
+    y_proj += offset_y;
+
+    // Dessiner le pixel avec MiniLibX
+    mlx_pixel_put(mlx_ptr, win_ptr, x_proj, y_proj, color);
 
 }
 
