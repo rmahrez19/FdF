@@ -6,7 +6,7 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 23:01:13 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/11/26 18:45:53 by ramahrez         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:28:46 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int	ft_atoi(const char *str)
 	{
 		result = result * 10 + (str[i] - '0');
 		i++;
-	}
+	};
 	return (result * n);
 }

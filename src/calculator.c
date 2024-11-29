@@ -6,22 +6,25 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 22:32:49 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/11/27 22:45:54 by ramahrez         ###   ########.fr       */
+/*   Updated: 2024/11/29 19:54:59 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/FdF.h"
 
-void ft_place(char **res, int x, int y, int z)
+void ft_place(int **res, int x_a, int y_a, int z_a)
 {
 	static int i = 0;
-	res[i][x] = x;
-	res[i][y] = y;
-	res[i][z] = z;
+	// printf("x_a %d\n", x_a);
+	
+	res[i][0] = x_a;
+	res[i][1] = y_a;
+	res[i][2] = z_a;
+	
 	i++;
 }
 
-void	ft_test(char **res, t_map *s_map)
+void	ft_ordinate(t_map *s_map)
 {
 	size_t	i;
 	size_t	j;
@@ -37,22 +40,24 @@ void	ft_test(char **res, t_map *s_map)
 		while(s_map->map[i] != '\n' && s_map->map[i] != 0)
 		{
 			while(s_map->map[i] == ' ')
-				i++;
+				i++;	
 			count++;
-			ft_place(res, count, (j + 1), ft_atoi(s_map + i));
-			while(s_map->map[i] != ' ' && s_map->map[i] != 0)
-				i++;
+			ft_place(s_map->position, count, (j + 1), ft_atoi(s_map->map + i));
+			while(s_map->map[i] != ' ' && s_map->map[i] != 0 && s_map->map[i] != '\n')
+					i++;
 		}
-		count = 0;
+		i++;
 		j++;
+		// printf("j = %zu", j);
+		count = 0;
 	}
 }
 
 
 
-void project_isometric(int x, int y, int z, int *x_proj, int *y_proj) 
-{
-float angle = M_PI / 6; // 30 degres
-*x_proj = (x - y) * cos(angle);
-*y_proj = (x + y) * sin(angle) - z;
-}
+// void project_isometric(int x, int y, int z, int *x_proj, int *y_proj) 
+// {
+// float angle = M_PI / 6; // 30 degres
+// *x_proj = (x - y) * cos(angle);
+// *y_proj = (x + y) * sin(angle) - z;
+// }

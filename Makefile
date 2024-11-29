@@ -4,10 +4,13 @@ CFLAGS      = -g -Wall -Wextra -Werror
 NAME        = my_project
 LIBFT_DIR   = libft
 LIBFT       = $(LIBFT_DIR)/libft.a
-INCLUDES    = -I includes -I $(LIBFT_DIR)
+MLX_DIR     = mlx_linux
+MLX_LIB     = $(MLX_DIR)/libmlx.a
+MLX_FLAGS   = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm
+INCLUDES    = -I includes -I $(LIBFT_DIR) -I $(MLX_DIR)
 SRC_DIR     = src
 OBJ_DIR     = obj
-SRC         = main.c test.c
+SRC         = main.c test.c calculator.c utils_read.c
 OBJ         = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 # Couleurs
@@ -17,11 +20,11 @@ GREEN       = \033[0;32m
 NC          = \033[0m
 
 # Règles
-all: $(OBJ_DIR) $(LIBFT) $(NAME)
+all: $(OBJ_DIR) $(LIBFT) $(MLX_LIB) $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "$(YELLOW)Linking project executable: $(NAME)...$(NC)"
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
 	@echo "$(GREEN)Executable $(NAME) created successfully!$(NC)"
 
 $(OBJ_DIR):
@@ -35,15 +38,21 @@ $(LIBFT):
 	@echo "$(YELLOW)Building libft library...$(NC)"
 	@$(MAKE) -C $(LIBFT_DIR)
 
+$(MLX_LIB):
+	@echo "$(YELLOW)Building minilibx library...$(NC)"
+	@$(MAKE) -C $(MLX_DIR)
+
 clean:
 	@echo "$(RED)Removing project object files...$(NC)"
 	@rm -rf $(OBJ_DIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(MLX_DIR) clean
 
 fclean: clean
-	@echo "$(RED)Removing $(NAME) and libft files...$(NC)"
+	@echo "$(RED)Removing $(NAME), libft, and minilibx files...$(NC)"
 	@rm -f $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(MLX_DIR) clean
 
 re: fclean all
 

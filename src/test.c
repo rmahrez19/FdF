@@ -20,15 +20,15 @@ int ft_count(char *str)
 	return(count);
 }
 
-void ft_alloc(size_t size, int **res)
+void ft_alloc(size_t size, int ***res, int len)
 {
 	size_t i;
 
 	i = 0;
-	res = malloc(sizeof(int *) * size);
+	*res = malloc(sizeof(int *) * (size + 1));
 	while(i < size)
 	{
-		res[i] = malloc(sizeof(int) * 3);
+		(*res)[i] = malloc(sizeof(int) * len);
 		i++;
 	}
 }
@@ -36,27 +36,10 @@ void ft_alloc(size_t size, int **res)
 void ft_read_map(t_map *s_map)
 {
 	int fd;
-	//int old_size;
-	int new_size;
-	int nread;
-
-	//old_size = 1024;
-	new_size = 0;
-	nread = 0;
+	int error;
+	
+	error = 0;
 	fd = open("map/test.fdf", O_RDONLY);
-	while(new_size == nread)
-	{
-		nread = read(fd, s_map->map, 1024);
-
-	s_map->map[nread - 1] = 0;
-		//s_map->map = ft_realloc(s_map->map, old_size, old_size + nread, 1);
-	}
-	s_map->size_map = ft_count(s_map->map);
-	printf("%s\n", s_map->map);
+	s_map->map = read_alloc_fd(fd, &error);
 }
 
-// void project_isometric(int x, int y, int z, int *x_proj, int *y_proj) {
-// float angle = M_PI / 6; // 30 degres
-// *x_proj = (x - y) * cos(angle);
-// *y_proj = (x + y) * sin(angle) - z;
-// }
