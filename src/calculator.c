@@ -6,7 +6,7 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 22:32:49 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/11/29 19:54:59 by ramahrez         ###   ########.fr       */
+/*   Updated: 2024/11/29 23:20:31 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,4 @@ void	ft_ordinate(t_map *s_map)
 
 
 
-// void project_isometric(int x, int y, int z, int *x_proj, int *y_proj) 
-// {
-// float angle = M_PI / 6; // 30 degres
-// *x_proj = (x - y) * cos(angle);
-// *y_proj = (x + y) * sin(angle) - z;
-// }
+

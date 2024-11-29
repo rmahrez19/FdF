@@ -7,6 +7,14 @@
 // #define y 1
 // #define z 2
 
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
+
+typedef struct s_data {
+    void    *mlx_ptr;
+    void    *win_ptr;
+} t_data;
+
 typedef struct s_map
 {
 	char	*map;
@@ -24,5 +32,7 @@ void	ft_ordinate(t_map *s_map);
 void	ft_alloc(size_t size, int ***res, int len);
 void	ft_read_map(t_map *s_map);
 char	*read_alloc_fd(int fd, int *error);
+int draw_map(t_map s_map);
+void    draw_pixel(void *mlx_ptr, void *win_ptr, int x, int y, int color);
 
 #endif
