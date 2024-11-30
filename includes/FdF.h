@@ -23,6 +23,15 @@ typedef struct s_map
 	char 	**res;
 }t_map;
 
+typedef struct s_point
+{
+	int temp_x_proj;
+	int temp_y_proj;
+	int temp_x;
+	int temp_y;
+	
+}t_point;
+
 #ifndef M_PI
 #define M_PI
 #endif
