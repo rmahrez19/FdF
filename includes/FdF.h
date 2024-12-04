@@ -27,8 +27,8 @@ typedef struct s_point
 {
 	int temp_x_proj;
 	int temp_y_proj;
-	int temp_x;
-	int temp_y;
+	int temp_x_p;
+	int temp_y_p;
 	
 }t_point;
 
@@ -36,9 +36,10 @@ typedef struct s_point
 #define M_PI
 #endif
 
-int ft_count(char *str);
+int ft_count_line(char *str);
+int ft_count_colone(char *str);
 void	ft_ordinate(t_map *s_map);
-void	ft_alloc(size_t size, int ***res, int len);
+void	ft_alloc(int ***res, char *str);
 void	ft_read_map(t_map *s_map);
 char	*read_alloc_fd(int fd, int *error);
 int draw_map(t_map s_map);

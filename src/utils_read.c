@@ -6,7 +6,7 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:26:10 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/11/29 15:08:15 by ramahrez         ###   ########.fr       */
+/*   Updated: 2024/12/01 22:38:32 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	*read_alloc_fd(int fd, int *error)
 	str = NULL;
 	size = 0;
 	nread = 1024;
-	printf("ok1\n");
 	while (nread != 0)
 	{
 		i = size;
@@ -41,17 +40,15 @@ char	*read_alloc_fd(int fd, int *error)
 			*error = 2;
 			return (NULL);
 		}
-		if(nread != 0){
-		while (i < size)
+		if(nread != 0)
 		{
-			str[i] = buffer[i % nread];
-			i++;
+			while (i < size)
+			{
+				str[i] = buffer[i % nread];
+				i++;
+			}
 		}
-		}
-		printf("nread = %d", nread);
-		printf("ok2\n");
 	}
 	str[i] = 0;
-	printf("ok");
 	return (str);
 }

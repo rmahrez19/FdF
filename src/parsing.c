@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calculator.c                                       :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 22:32:49 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/11/29 23:20:31 by ramahrez         ###   ########.fr       */
+/*   Updated: 2024/12/04 06:00:51 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,14 @@ void ft_place(int **res, int x_a, int y_a, int z_a)
 	res[i][0] = x_a;
 	res[i][1] = y_a;
 	res[i][2] = z_a;
-	
 	i++;
+}
+
+
+
+int ft_count_axe(void)
+{
+	return(0);
 }
 
 void	ft_ordinate(t_map *s_map)
@@ -41,14 +47,14 @@ void	ft_ordinate(t_map *s_map)
 		{
 			while(s_map->map[i] == ' ')
 				i++;	
+			s_map->position[j][count] = ft_atoi(s_map->map + i);
 			count++;
-			ft_place(s_map->position, count, (j + 1), ft_atoi(s_map->map + i));
 			while(s_map->map[i] != ' ' && s_map->map[i] != 0 && s_map->map[i] != '\n')
 					i++;
 		}
-		i++;
+		if(s_map->map[i])
+			i++;
 		j++;
-		// printf("j = %zu", j);
 		count = 0;
 	}
 }
