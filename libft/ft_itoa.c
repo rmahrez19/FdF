@@ -6,7 +6,7 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:20:52 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/11/16 22:19:27 by ramahrez         ###   ########.fr       */
+/*   Updated: 2024/12/30 01:07:15 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_itoa(int nb)
 
 	n = nb;
 	i = ft_strlena(n);
-	res = malloc((ft_strlena(n) + 1) * sizeof(char));
+	res = ft_malloc((ft_strlena(n) + 1) * sizeof(char));
 	if (!res)
 		return (NULL);
 	res[i] = '\0';

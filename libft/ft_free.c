@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/19 07:11:21 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/12/29 18:34:30 by ramahrez         ###   ########.fr       */
+/*   Created: 2024/12/26 05:28:23 by ramahrez          #+#    #+#             */
+/*   Updated: 2024/12/26 05:28:55 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/FdF.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+void ft_free(void)
 {
-	t_map	s_map;
-
-	(void)ac;
-	ft_read_map(av[1], &s_map);
-	s_map.res = ft_split(s_map.map, '\n');
-	int fd = open("map/test.fdf", O_RDONLY);
-	printf("%s", get_next_line(fd));
-	ft_alloc(&s_map.position, s_map.map);
-	ft_ordinate(&s_map);
-	// ft_normalise(&s_map);
-	draw_map(s_map);
-	ft_free();
+	ft_malloc(0);
 }

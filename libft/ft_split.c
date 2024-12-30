@@ -6,7 +6,7 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:45 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/11/18 16:38:18 by ramahrez         ###   ########.fr       */
+/*   Updated: 2024/12/30 01:07:39 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	**addwords(char **res, const char *s, char sep)
 			i++;
 			k++;
 		}
-		res[j] = malloc((k + 1) * sizeof(char));
+		res[j] = ft_malloc((k + 1) * sizeof(char));
 		if (!res[j])
 			return (ft_clear(res, j));
 		ft_strcpyi(res[j], s, i - k, k);

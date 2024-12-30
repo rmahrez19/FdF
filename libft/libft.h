@@ -6,7 +6,7 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:20:58 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/11/26 18:44:32 by ramahrez         ###   ########.fr       */
+/*   Updated: 2024/12/26 05:28:03 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_putnbr_fd(int nb, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_bzero(void *s, size_t n);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
+void 	ft_free(void);
 
 void	*ft_realloc(void *old, int old_size, int new_size, int data_size);
 void	*ft_calloc(size_t count, size_t size);
@@ -39,6 +40,7 @@ void	*ft_memset(void *b, int c, size_t len);
 void	*ft_memchr(const void *s, int c, size_t len);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dst, const void *src, size_t len);
+void *ft_malloc(size_t size);
 
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);

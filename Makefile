@@ -10,7 +10,8 @@ MLX_FLAGS   = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm
 INCLUDES    = -I includes -I $(LIBFT_DIR) -I $(MLX_DIR)
 SRC_DIR     = src
 OBJ_DIR     = obj
-SRC         = main.c utils.c parsing.c utils_read.c draw.c
+SRC         = main.c utils.c parsing.c utils_read.c draw.c event.c draws_utils.c ft_normalis.c
+
 OBJ         = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 # Couleurs

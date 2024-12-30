@@ -1,24 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/12 23:02:49 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/12/30 01:07:03 by ramahrez         ###   ########.fr       */
+/*   Created: 2024/12/26 00:25:33 by ramahrez          #+#    #+#             */
+/*   Updated: 2024/12/26 05:30:44 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
+
+
+
+
+void ft_free_list(t_list *list)
 {
-	void	*ptr;
+	t_list *tmp;
 	
-	ptr = ft_malloc(count * size);
-	if (!ptr)
-		return (NULL);
-	ft_bzero(ptr, count * size);
-	return (ptr);
+	while(list != NULL)
+	{
+		tmp = list;
+		free(list->content);
+		list = list->next;
+		free(tmp);
+	}
 }
+
+void *ft_malloc(size_t size)
+{
+	void *ptr;
+	static t_list *adr = NULL;
+
+	if(size == 0)
+	{
+		ft_free_list(adr);
+		adr = NULL;
+		return(NULL);
+	}
+	ptr = malloc(size);
+	if(!ptr)
+		return(NULL);
+	ft_lstadd_front(&adr, ft_lstnew(ptr));
+	
+	return(ptr);
+}
+
