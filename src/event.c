@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 01:20:07 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/12/19 07:19:23 by ramahrez         ###   ########.fr       */
+/*   Created: 2025/02/11 18:54:33 by ramahrez          #+#    #+#             */
+/*   Updated: 2025/02/11 19:03:55 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,17 @@
 
 int	key_press(int keycode, void *param)
 {
-	(void)param;
-	if (keycode == ESC_KEY)
+	t_all *s_all = (t_all *)param;
+
+    if(keycode == ESC_KEY)
+    {
+        ft_free();
+		free(s_all->map.map);
+		mlx_destroy_image(s_all->data.mlx_ptr, s_all->data.img_ptr);
+		mlx_destroy_window(s_all->data.mlx_ptr, s_all->data.win_ptr);
+        mlx_destroy_display(s_all->data.mlx_ptr);
+		free(s_all->data.mlx_ptr);
 		exit(0);
-	return (0);
+    }
+    return(1);
 }

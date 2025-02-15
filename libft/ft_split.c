@@ -6,7 +6,7 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:45 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/12/30 01:07:39 by ramahrez         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:03:13 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	**ft_split(char const *s, char sep)
 {
 	char	**res;
 
-	res = malloc((countwords(s, sep) + 1) * sizeof(char *));
+	res = ft_malloc((countwords(s, sep) + 1) * sizeof(char *));
 	if (!res)
 		return (NULL);
 	res = addwords(res, s, sep);

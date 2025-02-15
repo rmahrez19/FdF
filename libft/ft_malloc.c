@@ -6,7 +6,7 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 00:25:33 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/12/26 05:30:44 by ramahrez         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:11:59 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void ft_free_list(t_list *list)
 		free(list->content);
 		list = list->next;
 		free(tmp);
+		tmp = NULL;
 	}
 }
 
@@ -43,6 +44,7 @@ void *ft_malloc(size_t size)
 	ptr = malloc(size);
 	if(!ptr)
 		return(NULL);
+	ft_memset(ptr, 0, size);
 	ft_lstadd_front(&adr, ft_lstnew(ptr));
 	
 	return(ptr);

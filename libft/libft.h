@@ -6,7 +6,7 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:20:58 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/12/26 05:28:03 by ramahrez         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:11:30 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int		ft_isascii(int c);
 int		ft_isalnum(int c);
 int		ft_isdigit(int c);
 int		ft_isalpha(int c);
+int ft_atoi_base(char *str, char *base);
+
 
 size_t	ft_strlen(const char *str);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);

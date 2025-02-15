@@ -1,6 +1,6 @@
 # Variables
 CC          = cc
-CFLAGS      = -g -Wall -Wextra -Werror
+CFLAGS      = -g -Wall -Wextra -Werror  -o my_project
 NAME        = my_project
 LIBFT_DIR   = libft
 LIBFT       = $(LIBFT_DIR)/libft.a
@@ -10,8 +10,7 @@ MLX_FLAGS   = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm
 INCLUDES    = -I includes -I $(LIBFT_DIR) -I $(MLX_DIR)
 SRC_DIR     = src
 OBJ_DIR     = obj
-SRC         = main.c utils.c parsing.c utils_read.c draw.c event.c draws_utils.c ft_normalis.c
-
+SRC         = main.c read.c utils.c error.c parsing.c draw.c event.c project.c init.c
 OBJ         = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 # Couleurs
@@ -58,3 +57,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+

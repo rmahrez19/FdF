@@ -6,7 +6,7 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:55:08 by ramahrez          #+#    #+#             */
-/*   Updated: 2024/12/26 05:33:33 by ramahrez         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:05:55 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void *ft_realloc(void *old, int old_size, int new_size, int data_size)
     void *ptr;
 
     // Alloue le nouveau bloc de mémoire
-    ptr = ft_malloc(new_size * data_size);
+    ptr = malloc(new_size * data_size);
     if (!ptr)
         return (NULL);
 
