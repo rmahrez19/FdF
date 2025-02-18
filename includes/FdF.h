@@ -13,7 +13,6 @@ void ft_read_map(char *av, t_map *s_map);
 void	ft_init(t_all *s_all);
 void ft_alloc(float ***res, t_all s_all);
 void error(void);
-void ft_displaystr(t_all s_all);
 void ft_pars(t_map *s_map);
 void	project(int	i, int	j, t_all *s_all);
 
@@ -24,8 +23,11 @@ int draw_map(t_all *s_all);
 void	ft_init(t_all *s_all);
 int ft_count_line(char *str);
 int ft_count_colone(char *str);
+void ft_init_read(char **str, char **buffer, int *size, int *line_len);
 
 void	draw_pixel(t_data data, int x, int y);
 void draw_line(t_data data, t_point *point);
+void ft_exit(t_all *s_all);
+void test(t_all *s_all);
 
 #endif

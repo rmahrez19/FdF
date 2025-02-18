@@ -6,20 +6,16 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 00:25:33 by ramahrez          #+#    #+#             */
-/*   Updated: 2025/02/12 15:11:59 by ramahrez         ###   ########.fr       */
+/*   Updated: 2025/02/16 17:22:44 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-
-
-
-
 void ft_free_list(t_list *list)
 {
 	t_list *tmp;
-	
+
 	while(list != NULL)
 	{
 		tmp = list;
@@ -46,7 +42,7 @@ void *ft_malloc(size_t size)
 		return(NULL);
 	ft_memset(ptr, 0, size);
 	ft_lstadd_front(&adr, ft_lstnew(ptr));
-	
+
 	return(ptr);
 }
 

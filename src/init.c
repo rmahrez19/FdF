@@ -6,15 +6,23 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 16:19:32 by ramahrez          #+#    #+#             */
-/*   Updated: 2025/02/15 16:22:23 by ramahrez         ###   ########.fr       */
+/*   Updated: 2025/02/16 16:56:39 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/FdF.h"
 
+void	ft_init_read(char **str, char **buffer, int *size, int *line_len)
+{
+	*str = NULL;
+	*buffer = NULL;
+	*size = 0;
+	*line_len = 0;
+}
+
 int	init_window(t_all *s_all)
 {
-	s_all->data.mlx_ptr = mlx_init();
+		s_all->data.mlx_ptr = mlx_init();
 	if (!s_all->data.mlx_ptr)
 		return (1);
 	s_all->data.win_ptr = mlx_new_window(s_all->data.mlx_ptr,
@@ -30,7 +38,7 @@ int	init_window(t_all *s_all)
 void	ft_init(t_all *s_all)
 {
 	s_all->point.x_end = 0;
-    s_all->point.y_end = 0;
+	s_all->point.y_end = 0;
 	s_all->point.zoom = 10;
 	s_all->point.angle = 3.14159 / 6;
 	s_all->point.x = 2;
@@ -42,4 +50,5 @@ void	ft_init(t_all *s_all)
 	s_all->point.z_rot = 0;
 	s_all->point.x_start = 0;
 	s_all->point.y_start = 0;
+	s_all->point.up = 0;
 }

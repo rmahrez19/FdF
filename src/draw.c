@@ -6,7 +6,7 @@
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 18:50:19 by ramahrez          #+#    #+#             */
-/*   Updated: 2025/02/15 16:26:38 by ramahrez         ###   ########.fr       */
+/*   Updated: 2025/02/16 16:45:38 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,8 @@ void	ft_loop_project(t_all *s_all)
 	}
 }
 
-int	draw_map(t_all *s_all)
+void	test(t_all *s_all)
 {
-	init_window(s_all);
 	s_all->data.img_ptr = mlx_new_image(s_all->data.mlx_ptr,
 			WINDOW_WIDTH, WINDOW_HEIGHT);
 	s_all->data.img_data = mlx_get_data_addr(s_all->data.img_ptr,
@@ -100,8 +99,13 @@ int	draw_map(t_all *s_all)
 	ft_loop_project(s_all);
 	mlx_put_image_to_window(s_all->data.mlx_ptr,
 		s_all->data.win_ptr, s_all->data.img_ptr, 0, 0);
-	ft_displaystr(*s_all);
 	mlx_key_hook(s_all->data.win_ptr, key_press, s_all);
 	mlx_loop(s_all->data.mlx_ptr);
+}
+
+int	draw_map(t_all *s_all)
+{
+	init_window(s_all);
+	test(s_all);
 	return (0);
 }
