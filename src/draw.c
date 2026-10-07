@@ -5,112 +5,73 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ramahrez <ramahrez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 18:50:19 by ramahrez          #+#    #+#             */
-/*   Updated: 2025/02/16 16:45:38 by ramahrez         ###   ########.fr       */
+/*   Created: 2026/10/08 00:30:00 by ramahrez          #+#    #+#             */
+/*   Updated: 2026/10/08 00:30:00 by ramahrez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/FdF.h"
+#include "fdf.h"
 
-void	draw_pixel(t_data data, int x, int y)
+void	put_pixel(t_img *img, int x, int y, int color)
 {
-	int	i;
+	char	*dst;
 
-	if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
+	if (x < 0 || y < 0 || x >= WIN_WIDTH || y >= WIN_HEIGHT)
+		return ;
+	dst = img->addr + y * img->line_len + x * (img->bpp / 8);
+	*(unsigned int *)dst = color;
+}
+
+static void	project_all(t_fdf *fdf)
+{
+	int	x;
+	int	y;
+
+	y = -1;
+	while (++y < fdf->map.height)
 	{
-		i = (y * data.size_line) + (x * (data.bpp / 8));
-		*(unsigned int *)(data.img_data + i) = data.color;
+		x = -1;
+		while (++x < fdf->map.width)
+			fdf->map.proj[y][x] = project_point(fdf, x, y);
 	}
 }
 
-void	ft_insigne(t_d *s_d, t_point *point, int *err)
+static void	link_points(t_img *img, t_pixel a, t_pixel b)
 {
-	s_d->dx = abs(point->x_end - point->x_start);
-	s_d->dy = abs(point->y_end - point->y_start);
-	if (point->x_start < point->x_end)
-		s_d->sx = 1;
-	else
-		s_d->sx = -1;
-	if (point->y_start < point->y_end)
-		s_d->sy = 1;
-	else
-		s_d->sy = -1;
-	*err = s_d->dx - s_d->dy;
+	if (a.hidden && b.hidden)
+		return ;
+	draw_line(img, a, b);
 }
 
-void	draw_line(t_data data, t_point *point)
+/* En mode sphere, la derniere colonne est reliee a la premiere. */
+static void	draw_grid(t_fdf *fdf)
 {
-	t_d	s_d;
-	int	err;
-	int	e2;
-	int	tab[2];
+	t_pixel	**p;
+	int		x;
+	int		y;
 
-	ft_insigne(&s_d, point, &err);
-	tab[0] = point->x_start;
-	tab[1] = point->y_start;
-	while (1)
+	p = fdf->map.proj;
+	y = -1;
+	while (++y < fdf->map.height)
 	{
-		draw_pixel(data, tab[0], tab[1]);
-		if (tab[0] == point->x_end && tab[1] == point->y_end)
-			break ;
-		e2 = 2 * err;
-		if (e2 > -s_d.dy)
+		x = -1;
+		while (++x < fdf->map.width)
 		{
-			err -= s_d.dy;
-			tab[0] += s_d.sx;
-		}
-		if (e2 < s_d.dx)
-		{
-			err += s_d.dx;
-			tab[1] += s_d.sy;
+			if (x + 1 < fdf->map.width)
+				link_points(&fdf->img, p[y][x], p[y][x + 1]);
+			else if (fdf->view.sphere && fdf->map.width > 2)
+				link_points(&fdf->img, p[y][x], p[y][0]);
+			if (y + 1 < fdf->map.height)
+				link_points(&fdf->img, p[y][x], p[y + 1][x]);
 		}
 	}
 }
 
-void	ft_loop_project(t_all *s_all)
+void	render(t_fdf *fdf)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (j < s_all->point.y_line)
-	{
-		while (i < s_all->point.x_line)
-		{
-			project(i, j, s_all);
-			i++;
-		}
-		s_all->point.x_start = 0;
-		s_all->point.y_start = 0;
-		i = 0;
-		j++;
-	}
-}
-
-void	render(t_all *s_all)
-{
-	ft_bzero(s_all->data.img_data, s_all->data.size_line * WINDOW_HEIGHT);
-	ft_loop_project(s_all);
-	mlx_put_image_to_window(s_all->data.mlx_ptr,
-		s_all->data.win_ptr, s_all->data.img_ptr, 0, 0);
-}
-
-int	draw_map(t_all *s_all)
-{
-	if (init_window(s_all))
-		error();
-	s_all->data.img_ptr = mlx_new_image(s_all->data.mlx_ptr,
-			WINDOW_WIDTH, WINDOW_HEIGHT);
-	s_all->data.img_data = mlx_get_data_addr(s_all->data.img_ptr,
-			&s_all->data.bpp, &s_all->data.size_line, &s_all->data.endian);
-	if (!s_all->data.img_data)
-		error();
-	render(s_all);
-	mlx_hook(s_all->data.win_ptr, 2, 1L << 0, key_press, s_all);
-	mlx_hook(s_all->data.win_ptr, 3, 1L << 1, key_release,
-		s_all);
-	mlx_loop_hook(s_all->data.mlx_ptr, loop_hook, s_all);
-	mlx_loop(s_all->data.mlx_ptr);
-	return (0);
+	ft_bzero(fdf->img.addr, fdf->img.line_len * WIN_HEIGHT);
+	project_all(fdf);
+	draw_grid(fdf);
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.ptr, 0, 0);
+	draw_hud(fdf);
 }

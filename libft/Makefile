@@ -35,7 +35,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
-	@echo -e "$(GREEN)Static library created: $(NAME)$(NC)"
+	@printf "$(GREEN)Static library created: $(NAME)$(NC)\n"
 
 %.o: %.c $(HEADER)
 	@printf "$(YELLOW)Generating libft object... %-38.38s \r$(NC)" $@

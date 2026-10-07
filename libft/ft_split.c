@@ -47,19 +47,7 @@ static void	ft_strcpyi(char *dest, const char *src, int index, int len)
 	dest[i] = '\0';
 }
 
-static void	*ft_clear(char **res, int j)
-{
-	j--;
-	while (j >= 0)
-	{
-		free(res[j]);
-		j--;
-	}
-	free(res);
-	return (NULL);
-}
-
-static char	**addwords(char **res, const char *s, char sep)
+static char	**addwords(char **res, const char *s, char sep, int words)
 {
 	int	i;
 	int	j;
@@ -68,7 +56,7 @@ static char	**addwords(char **res, const char *s, char sep)
 	i = 0;
 	j = 0;
 	k = 0;
-	while (j < countwords(s, sep))
+	while (j < words)
 	{
 		while (s[i] == sep && s[i])
 			i++;
@@ -79,7 +67,7 @@ static char	**addwords(char **res, const char *s, char sep)
 		}
 		res[j] = ft_malloc((k + 1) * sizeof(char));
 		if (!res[j])
-			return (ft_clear(res, j));
+			return (NULL);
 		ft_strcpyi(res[j], s, i - k, k);
 		k = 0;
 		j++;
@@ -91,10 +79,12 @@ static char	**addwords(char **res, const char *s, char sep)
 char	**ft_split(char const *s, char sep)
 {
 	char	**res;
+	int		words;
 
-	res = ft_malloc((countwords(s, sep) + 1) * sizeof(char *));
+	words = countwords(s, sep);
+	res = ft_malloc((words + 1) * sizeof(char *));
 	if (!res)
 		return (NULL);
-	res = addwords(res, s, sep);
+	res = addwords(res, s, sep, words);
 	return (res);
 }

@@ -1,60 +1,73 @@
-# Variables
-CC          = cc
-CFLAGS      = -g -Wall -Wextra -Werror -std=gnu17
-NAME        = my_project
-LIBFT_DIR   = libft
-LIBFT       = $(LIBFT_DIR)/libft.a
-MLX_DIR     = mlx_linux
-MLX_LIB     = $(MLX_DIR)/libmlx.a
-MLX_FLAGS   = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm
-INCLUDES    = -I includes -I $(LIBFT_DIR) -I $(MLX_DIR)
-SRC_DIR     = src
-OBJ_DIR     = obj
-SRC         = main.c read.c utils.c error.c parsing.c draw.c event.c project.c init.c
-OBJ         = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
+NAME		= fdf
 
-# Couleurs
-RED         = \033[0;31m
-YELLOW      = \033[0;33m
-GREEN       = \033[0;32m
-NC          = \033[0m
+CC			= cc
+CFLAGS		= -Wall -Wextra -Werror -std=gnu17 -MMD -MP
 
-# Règles
-all: $(OBJ_DIR) $(LIBFT) $(MLX_LIB) $(NAME)
+SRC_DIR		= src
+OBJ_DIR		= obj
+INC_DIR		= includes
+LIBFT_DIR	= libft
+MLX_DIR		= mlx_linux
 
-$(NAME): $(OBJ)
-	@echo "$(YELLOW)Linking project executable: $(NAME)...$(NC)"
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
-	@echo "$(GREEN)Executable $(NAME) created successfully!$(NC)"
+LIBFT		= $(LIBFT_DIR)/libft.a
+MLX			= $(MLX_DIR)/libmlx.a
 
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+INCLUDES	= -I $(INC_DIR) -I $(LIBFT_DIR) -I $(MLX_DIR)
+LDFLAGS		= -L $(LIBFT_DIR) -lft -L $(MLX_DIR) -lmlx -lXext -lX11 -lm
+
+SRC			= main.c \
+			  map_read.c \
+			  map_parse.c \
+			  map_utils.c \
+			  view.c \
+			  transform.c \
+			  draw.c \
+			  line.c \
+			  hud.c \
+			  events.c \
+			  actions.c \
+			  exit.c
+OBJ			= $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
+DEP			= $(OBJ:.o=.d)
+
+GREEN		= \033[0;32m
+YELLOW		= \033[0;33m
+RED			= \033[0;31m
+NC			= \033[0m
+
+all: $(NAME)
+
+$(NAME): $(LIBFT) $(MLX) $(OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) -o $@
+	@printf "$(GREEN)$(NAME) ready$(NC)\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	@echo "$(YELLOW)Compiling $< into $@...$(NC)"
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@printf "$(YELLOW)Compiling $<$(NC)\n"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJ_DIR):
+	@mkdir -p $@
 
 $(LIBFT):
-	@echo "$(YELLOW)Building libft library...$(NC)"
-	@$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -s -C $(LIBFT_DIR)
 
-$(MLX_LIB):
-	@echo "$(YELLOW)Building minilibx library...$(NC)"
-	@$(MAKE) -C $(MLX_DIR)
+$(MLX):
+	@printf "$(YELLOW)Building minilibx$(NC)\n"
+	@$(MAKE) -s -C $(MLX_DIR) > /dev/null 2>&1
 
 clean:
-	@echo "$(RED)Removing project object files...$(NC)"
 	@rm -rf $(OBJ_DIR)
-	@$(MAKE) -C $(LIBFT_DIR) clean
-	@$(MAKE) -C $(MLX_DIR) clean
+	@$(MAKE) -s -C $(LIBFT_DIR) clean
+	@$(MAKE) -s -C $(MLX_DIR) clean > /dev/null 2>&1
+	@printf "$(RED)Objects removed$(NC)\n"
 
 fclean: clean
-	@echo "$(RED)Removing $(NAME), libft, and minilibx files...$(NC)"
 	@rm -f $(NAME)
-	@$(MAKE) -C $(LIBFT_DIR) fclean
-	@$(MAKE) -C $(MLX_DIR) clean
+	@$(MAKE) -s -C $(LIBFT_DIR) fclean
+	@printf "$(RED)$(NAME) removed$(NC)\n"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+-include $(DEP)
 
+.PHONY: all clean fclean re
