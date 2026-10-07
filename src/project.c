@@ -21,8 +21,8 @@ void	apply_rotation(float *x, float *y, float *z, t_all *s_all)
 	s_rot.angle_y = s_all->point.y_rot;
 	s_rot.angle_z = s_all->point.z_rot;
 	// Convertir les coordonnées en float pour éviter la perte de précision
-	s_rot.x_tmp = *x;
-	s_rot.y_tmp = *y;
+	s_rot.x_tmp = *x - (s_all->point.x_line + 1) / 2.0f;
+	s_rot.y_tmp = *y - (s_all->point.y_line + 1) / 2.0f;
 	s_rot.z_tmp = *z;
 
     // Rotation autour de l'axe Z
@@ -40,10 +40,9 @@ void	apply_rotation(float *x, float *y, float *z, t_all *s_all)
     s_rot.z_rot = -s_rot.x_tmp * sin(s_rot.angle_y) + s_rot.z_tmp * cos(s_rot.angle_y);
     s_rot.y_rot = s_rot.y_tmp;
 
-    // Reconversion en int pour affectation
-    *x = (int)roundf(s_rot.x_rot);
-    *y = (int)roundf(s_rot.y_rot);
-    *z = (int)roundf(s_rot.z_rot);
+	*x = s_rot.x_rot + (s_all->point.x_line + 1) / 2.0f;
+	*y = s_rot.y_rot + (s_all->point.y_line + 1) / 2.0f;
+	*z = s_rot.z_rot;
 }
 
 void	project_isometric(float x, float y, float z, t_all *s_all)
@@ -96,16 +95,26 @@ void ft_project_isometric(float x, float y, float z, t_all *s_all)
 
 
 
+static int	seg_color(int a, int b)
+{
+	if (a != DEFAULT_COLOR)
+		return (a);
+	return (b);
+}
+
 void	project(int	i, int	j, t_all *s_all)
 {
-	s_all->data.color = 0xffffff;
 	if (i + 1 <= s_all->point.x_line && !(i == 0))
 	{
+		s_all->data.color = seg_color(s_all->map.color[j][i],
+				s_all->map.color[j][i - 1]);
 		project_isometric((float)i + 1, (float)j + 1,
 			s_all->map.position_z[j][i], s_all);
 	}
 	if (j + 1 < s_all->point.y_line)
 	{
+		s_all->data.color = seg_color(s_all->map.color[j][i],
+				s_all->map.color[j + 1][i]);
 		ft_project_isometric((float) i + 1,(float) j + 2,
 		s_all->map.position_z[j + 1][i], s_all);
 	}

@@ -26,6 +26,22 @@ int	pars_hexa(char *map)
 	return (0);
 }
 
+int	parse_color(char *str)
+{
+	int	result;
+
+	result = 0;
+	while (*str && (ft_strchr(HEXA_LOW, *str) || ft_strchr(HEXA_UP, *str)))
+	{
+		if (ft_strchr(HEXA_LOW, *str))
+			result = result * 16 + (ft_strchr(HEXA_LOW, *str) - HEXA_LOW);
+		else
+			result = result * 16 + (ft_strchr(HEXA_UP, *str) - HEXA_UP);
+		str++;
+	}
+	return (result);
+}
+
 void	ft_ordinate_hexa(t_map *s_map, t_pars s_pars)
 {
 	while (s_map->map[s_pars.i])
@@ -39,11 +55,12 @@ void	ft_ordinate_hexa(t_map *s_map, t_pars s_pars)
 			while (s_map->map[s_pars.i] != ',' && s_map->map[s_pars.i] != 0
 				&& s_map->map[s_pars.i] != '\n')
 				s_pars.i++;
+			s_map->color[s_pars.j][s_pars.count] = DEFAULT_COLOR;
 			if (s_map->map[s_pars.i] == ',')
 			{
 				s_pars.i++;
 				s_map->color[s_pars.j][s_pars.count]
-					= ft_atoi_base(s_map->map + s_pars.i + 3, hexa);
+					= parse_color(s_map->map + s_pars.i + 2);
 			}
 			s_pars.count++;
 			while (s_map->map[s_pars.i] != ' ' && s_map->map[s_pars.i] != 0
@@ -67,6 +84,7 @@ void	ft_ordinate(t_map *s_map, t_pars s_pars)
 				s_pars.i++;
 			s_map->position_z[s_pars.j][s_pars.count]
 				= ft_atoi(s_map->map + s_pars.i);
+			s_map->color[s_pars.j][s_pars.count] = DEFAULT_COLOR;
 			s_pars.count++;
 			while (s_map->map[s_pars.i] != ' ' && s_map->map[s_pars.i]
 				!= 0 && s_map->map[s_pars.i] != '\n')

@@ -1,0 +1,12 @@
+# Fichiers compilés
+*.o
+*.a
+obj/
+/my_project
+/fdf
+*.d
+
+# Fichiers système
+__MACOSX/
+.DS_Store
+*.swp

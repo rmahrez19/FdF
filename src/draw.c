@@ -19,7 +19,7 @@ void	draw_pixel(t_data data, int x, int y)
 	if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
 	{
 		i = (y * data.size_line) + (x * (data.bpp / 8));
-		*(unsigned int *)(data.img_data + i) = 0xffffff;
+		*(unsigned int *)(data.img_data + i) = data.color;
 	}
 }
 
@@ -88,24 +88,29 @@ void	ft_loop_project(t_all *s_all)
 	}
 }
 
-void	test(t_all *s_all)
+void	render(t_all *s_all)
 {
+	ft_bzero(s_all->data.img_data, s_all->data.size_line * WINDOW_HEIGHT);
+	ft_loop_project(s_all);
+	mlx_put_image_to_window(s_all->data.mlx_ptr,
+		s_all->data.win_ptr, s_all->data.img_ptr, 0, 0);
+}
+
+int	draw_map(t_all *s_all)
+{
+	if (init_window(s_all))
+		error();
 	s_all->data.img_ptr = mlx_new_image(s_all->data.mlx_ptr,
 			WINDOW_WIDTH, WINDOW_HEIGHT);
 	s_all->data.img_data = mlx_get_data_addr(s_all->data.img_ptr,
 			&s_all->data.bpp, &s_all->data.size_line, &s_all->data.endian);
 	if (!s_all->data.img_data)
 		error();
-	ft_loop_project(s_all);
-	mlx_put_image_to_window(s_all->data.mlx_ptr,
-		s_all->data.win_ptr, s_all->data.img_ptr, 0, 0);
-	mlx_key_hook(s_all->data.win_ptr, key_press, s_all);
+	render(s_all);
+	mlx_hook(s_all->data.win_ptr, 2, 1L << 0, key_press, s_all);
+	mlx_hook(s_all->data.win_ptr, 3, 1L << 1, key_release,
+		s_all);
+	mlx_loop_hook(s_all->data.mlx_ptr, loop_hook, s_all);
 	mlx_loop(s_all->data.mlx_ptr);
-}
-
-int	draw_map(t_all *s_all)
-{
-	init_window(s_all);
-	test(s_all);
 	return (0);
 }

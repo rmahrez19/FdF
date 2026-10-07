@@ -16,7 +16,11 @@ int	main(int ac, char **av)
 {
 	t_all	s_all;
 
-	(void)ac;
+	if (ac != 2)
+	{
+		ft_putstr_fd("Usage: ./my_project <map.fdf>\n", 2);
+		return (1);
+	}
 	ft_read_map(av[1], &s_all.map);
 	s_all.map.res = ft_split(s_all.map.map, '\n');
 	ft_init(&s_all);

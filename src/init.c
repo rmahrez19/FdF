@@ -51,4 +51,5 @@ void	ft_init(t_all *s_all)
 	s_all->point.x_start = 0;
 	s_all->point.y_start = 0;
 	s_all->point.up = 0;
+	s_all->point.rot_keys = 0;
 }

@@ -12,18 +12,31 @@
 
 #include "../includes/FdF.h"
 
-void	ft_event(int keycode, t_all *s_all)
+static int	rot_bit(int keycode)
 {
 	if (keycode == UP_KEY)
-		s_all->point.x_rot += 0.05;
+		return (1);
 	if (keycode == DOWN_KEY)
-		s_all->point.x_rot -= 0.05;
+		return (2);
+	if (keycode == RIGHT_KEY)
+		return (4);
+	if (keycode == LEFT_KEY)
+		return (8);
 	if (keycode == I_KEY)
-		s_all->point.z_rot += 0.05;
+		return (16);
 	if (keycode == K_KEY)
-		s_all->point.z_rot -= 0.05;
+		return (32);
+	return (0);
+}
+
+void	ft_event(int keycode, t_all *s_all)
+{
 	if (keycode == R_KEY)
 		ft_init(s_all);
+	if (keycode == P_KEY)
+		s_all->point.zoom = s_all->point.zoom + 2;
+	if (keycode == O_KEY)
+		s_all->point.zoom = s_all->point.zoom - 2;
 	if (keycode == A_KEY)
 		s_all->point.x -= 20;
 	if (keycode == D_KEY)
@@ -45,21 +58,37 @@ int	key_press(int keycode, void *param)
 	s_all = (t_all *)param;
 	if (keycode == ESC_KEY)
 		ft_exit(s_all);
-	if (keycode == P_KEY)
-		s_all->point.zoom = s_all->point.zoom + 2;
-	if (keycode == O_KEY)
-		s_all->point.zoom = s_all->point.zoom - 2;
-	if (keycode == RIGHT_KEY)
+	if (rot_bit(keycode))
 	{
-		s_all->point.y_rot += 0.05;
+		s_all->point.rot_keys |= rot_bit(keycode);
+		return (0);
 	}
-	if (keycode == LEFT_KEY)
-		s_all->point.y_rot -= 0.05;
-	else
-	{
-		ft_event(keycode, s_all);
-	}
-	mlx_destroy_image(s_all->data.mlx_ptr, s_all->data.img_ptr);
-	test(s_all);
-	return (1);
+	ft_event(keycode, s_all);
+	render(s_all);
+	return (0);
+}
+
+int	key_release(int keycode, void *param)
+{
+	t_all	*s_all;
+
+	s_all = (t_all *)param;
+	s_all->point.rot_keys &= ~rot_bit(keycode);
+	return (0);
+}
+
+int	loop_hook(void *param)
+{
+	t_all	*s_all;
+	int		keys;
+
+	s_all = (t_all *)param;
+	keys = s_all->point.rot_keys;
+	if (!keys)
+		return (0);
+	s_all->point.x_rot += ROT_SPEED * (!!(keys & 1) - !!(keys & 2));
+	s_all->point.y_rot += ROT_SPEED * (!!(keys & 4) - !!(keys & 8));
+	s_all->point.z_rot += ROT_SPEED * (!!(keys & 16) - !!(keys & 32));
+	render(s_all);
+	return (0);
 }

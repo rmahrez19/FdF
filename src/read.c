@@ -45,8 +45,7 @@ void	ft_read_map(char *av, t_map *s_map)
 {
 	int	fd;
 
-	(void)av;
-	fd = open(&av[1], O_RDONLY);
+	fd = open(av, O_RDONLY);
 	if (fd == -1)
 	{
 		ft_putstr_fd("Error: cannot open file\n", 2);

@@ -1,6 +1,6 @@
 # Variables
 CC          = cc
-CFLAGS      = -g -Wall -Wextra -Werror  -o my_project
+CFLAGS      = -g -Wall -Wextra -Werror -std=gnu17
 NAME        = my_project
 LIBFT_DIR   = libft
 LIBFT       = $(LIBFT_DIR)/libft.a

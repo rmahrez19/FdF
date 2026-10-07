@@ -31,6 +31,9 @@
 #define T_KEY 116
 #define G_KEY 103
 
+// vitesse de rotation (radians par image) quand on maintient une touche
+#define ROT_SPEED 0.02
+
 
 // regles a afficher
 #define rules_a "w :monter en haut"
@@ -85,6 +88,7 @@ typedef struct s_point
 	float y_rot;
 	float z_rot;
 	int up;
+	int rot_keys;
 }t_point;
 
 
