@@ -127,7 +127,10 @@ comma, written in hexadecimal. Every row must have the same number of points.
 ## Project structure
 
 ```
-includes/fdf.h      types, constants and prototypes
+includes/fdf.h      main header: includes and function prototypes
+includes/types.h    data structures (map, view, image, pixel...)
+includes/config.h   tunable constants: window size, colors, speeds
+includes/keys.h     X11 key codes
 src/main.c          entry point, window setup, event hooks
 src/map_read.c      file reading
 src/map_parse.c     grid allocation and parsing
